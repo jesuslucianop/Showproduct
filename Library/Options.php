@@ -1,5 +1,5 @@
 <?php
-Class Options 
+class Options
 {
     private $nombre = "";
     function __get($prop)
@@ -12,24 +12,25 @@ Class Options
     }
     function __set($prop, $val)
     {
-        if(isset($this->$prop))
-        {
+        if (isset($this->$prop)) {
             $this->$prop = $val;
-        }else
-        {
+        } else {
             echo "No existe una propiedad llamda {$prop}";
         }
     }
-   
-    static function Listado()
+
+    function Listado()
     {
         $datos = array();
-        $query  = "SELECT * FROM options ORDER by id DESC";
-        $rs = mysqli_query(Conexion::obj(),$query);
-       while( $fila = mysqli_fetch_object($rs)){
-        $datos[] = $fila;
-       }
-        return $datos;
+        $query  = "SELECT * FROM opciones";
+        $rs = mysqli_query(Conexion::obj(), $query);
+        while ($fila = mysqli_fetch_array($rs)) {
+            $datos[] = array(
+                'codigo' => $fila['id'],
+                'nombre' => $fila['nombre']
+            );
+        }
+        $json = json_encode($datos);
+        echo $json;
     }
-
 }

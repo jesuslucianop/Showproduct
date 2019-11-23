@@ -19,14 +19,18 @@ class Corps
         }
     }
 
-    static function Listado()
+     function Listado()
     {
         $datos = array();
         $query  = "SELECT * FROM corps ORDER by id DESC";
         $rs = mysqli_query(Conexion::obj(), $query);
-        while ($fila = mysqli_fetch_object($rs)) {
-            $datos[] = $fila;
+        while ($fila = mysqli_fetch_array($rs)) {
+            $datos[] = array(
+                'codigo' => $fila['Id'],
+                'Nombre'=>$fila['nombre']
+            );
         }
-        return $datos;
+      $json = json_encode($datos);
+      echo $json;
     }
 }
