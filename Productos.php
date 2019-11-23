@@ -3,13 +3,13 @@ include "./Library/Header.php";
 ?>
 <script>
     $(document).ready(function() {
-        alert("klk");
+        alert("entro");
 
 
         $.ajax({
             url: './Library/Motor.php',
             data: {
-                "parametros": "s"
+                "prodcuto": "s"
             },
             type: "GET",
             dataType: 'json',

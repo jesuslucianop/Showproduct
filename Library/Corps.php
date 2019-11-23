@@ -22,7 +22,7 @@ class Corps
      function Listado()
     {
         $datos = array();
-        $query  = "SELECT * FROM corps ORDER by id DESC";
+        $query  = "SELECT * FROM corps ORDER by id asc";
         $rs = mysqli_query(Conexion::obj(), $query);
         while ($fila = mysqli_fetch_array($rs)) {
             $datos[] = array(

@@ -22,13 +22,14 @@ class Options
     function Listado()
     {
         $datos = array();
-        $query  = "SELECT * FROM opciones";
+        $query  = "SELECT * FROM test";
         $rs = mysqli_query(Conexion::obj(), $query);
         while ($fila = mysqli_fetch_array($rs)) {
             $datos[] = array(
                 'codigo' => $fila['id'],
-                'nombre' => $fila['nombre']
+                'nombre' => $fila['nombre'],
             );
+        
         }
         $json = json_encode($datos);
         echo $json;
