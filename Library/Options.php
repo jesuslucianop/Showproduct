@@ -22,16 +22,24 @@ class Options
     function Listado()
     {
         $datos = array();
-        $query  = "SELECT * FROM test";
-        $rs = mysqli_query(Conexion::obj(), $query);
-        while ($fila = mysqli_fetch_array($rs)) {
-            $datos[] = array(
-                'codigo' => $fila['id'],
-                'nombre' => $fila['nombre'],
-            );
         
+    
+        $query1  = "SELECT * from options";
+        $rs1 = mysqli_query(Conexion::obj(), $query1);
+        while ($fila1 = mysqli_fetch_assoc($rs1)) {
+     // $jsonnombre =json_encode($fila['nombre2']);
+            $datos[] = array(
+                'codigo' => $fila1['id'],
+                'nombre' => $fila1['nombre'],
+                'detalles' => $fila1['detalle']
+                
+            );
+           // var_dump($fila);
+       
         }
         $json = json_encode($datos);
-        echo $json;
+       echo $json;
     }
+
+  
 }

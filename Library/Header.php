@@ -1,11 +1,12 @@
 <html>
 
 <head>
+<script type="text/javascript" src="./Library/Assets/js/jquery-1.11.1.min.js"></script>
   <link rel="stylesheet" href="./Library/Assets/css/bootstrap.css" />
   <link rel="stylesheet" href="./Library/Assets/css/bootstrap.min.css" />
   <script type="text/javascript" src="./Library/Assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="./Library/Assets/js/bootstrap.js"></script>
-  <script type="text/javascript" src="./Library/Assets/js/jquery-1.11.1.min.js"></script>
+  
   <style>
     #navid {
       margin-bottom: 20px;
