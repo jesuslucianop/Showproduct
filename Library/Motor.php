@@ -13,7 +13,12 @@ if(isset($_GET['empresas'])){
 
   echo $r->Listado();
 }
-
+if(isset($_POST['btnguardar'])){
+  $r = new corp_option();
+ echo $r->relacionarempresaconhadware($_POST['valueofselectempresa'],$_POST['valueofselecthadware']);
+  
+  }
+  
 if(isset($_GET['corps_options'])){
   $r = new corp_option();
   echo $r->Listado();

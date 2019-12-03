@@ -14,8 +14,8 @@ include "./Library/Header.php";
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLabel">  Inscribir nueva empresa corporativa</h5>
+        <button type="button"  id="btnclose">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -23,18 +23,18 @@ include "./Library/Header.php";
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
           <label data-error="wrong" data-success="right" for="orangeForm-name">Selecciona tu empresa</label>
-          <select id="caja233" class="form-control"></select>
+          <select id="selectempresa" class="form-control"></select>
 
         </div>
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
           <label data-error="wrong" data-success="right" for="orangeForm-name">Selecciona hadware</label>
-          <select id="caja23" class="form-control"></select>
+          <select id="selecthadware" class="form-control"></select>
 
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+     
         <button type="button" class="btn btn-primary" id="btnsave">Save changes</button>
       </div>
     </div>
@@ -68,13 +68,13 @@ include "./Library/Header.php";
       dataType: 'json',
       success: function(data) {
 
-        console.log(data);
+        //console.log(data);
 
         for (x = 0; x < data.length; x++) {
           $("#caja").append("<tr><td>" + data[x].nombre + "</td>" +
             "<td>" + data[x].hadwares + "</td>" +
             "</tr>");
-          console.log(data[x]);
+        //  console.log(data[x]);
         }
         //console.log(data[0]);
         datos.push(data);
@@ -91,15 +91,15 @@ include "./Library/Header.php";
         dataType: 'json',
         success: function(data) {
 
-          console.log(data);
+          //console.log(data);
           for (x = 0; x < data.length; x++) {
-            $("#caja23").append("<option value='" + data[x].codigo + "'>" +
+            $("#selecthadware").append("<option value='" + data[x].codigo + "'>" +
               data[x].nombre +
               "</option>"
 
             );
-            $("#sd").attr("value", data[x].idcorp);
-            console.log(data[x]);
+  
+           // console.log(data[x]);
           }
         }
       })
@@ -112,19 +112,55 @@ include "./Library/Header.php";
         dataType: 'json',
         success: function(datae) {
 
-          console.log(datae);
+         // console.log(datae);
           for (x = 0; x < datae.length; x++) {
-            $("#caja233").append("<option value='" + datae[x].codigo + "'>" +
+            $("#selectempresa").append("<option value='" + datae[x].codigo + "'>" +
               datae[x].Nombre +
               "</option>"
 
             );
-            $("#sd").attr("value", datae[x].idcorp);
-            console.log(datae[x]);
+         
+           // console.log(datae[x]);
           }
         }
-      })
+      });
+      $("btnclose").click(function(){
+        alert("klk ");
+      });
+      $("#btnsave").click(function(){
+     
+
+        var selectempresa = $("#selectempresa").val();
+        var selecthadware = $("#selecthadware").val();
+      
+        $.ajax({
+        url: './Library/Motor.php',
+        data: {
+          "btnguardar": "s","valueofselectempresa":+selectempresa,
+                            "valueofselecthadware":+selecthadware
+        },
+        type: "POST",
+        dataType: 'json',
+        success: function(e) {
+            if(e=="false"){
+                alert("Esta empresa ya tiene agregado el hadware agregar, intente con otro.");
+                location.reload();
+            }
+        
+            console.log(e);
+            location.reload();
+          }
+        
+      });
+   
+      });
+      $("#btnclose").click(function(){
+          location.reload();
+      });
+  
+      $('#btnmodal').modal({backdrop: 'static', keyboard: false})
     });
+
   });
 </script>
 
