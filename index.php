@@ -5,7 +5,7 @@ include "./Library/Header.php";
 
 ?>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btnmodal">
- Inscribir nueva empresa corporativa
+  Inscribir nueva empresa corporativa
 
 </button>
 
@@ -20,87 +20,112 @@ include "./Library/Header.php";
         </button>
       </div>
       <div class="modal-body">
-      <div class="md-form mb-5" id="caja23">
+        <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
-   
-         
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Selecciona tu empresa</label>
+          <select id="caja233" class="form-control"></select>
+
         </div>
-     
+        <div class="md-form mb-5">
+          <i class="fas fa-user prefix grey-text"></i>
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Selecciona hadware</label>
+          <select id="caja23" class="form-control"></select>
+
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="btnsave">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 <table class="table table-striped">
-    <thead>
+  <thead>
     <h1>Empresas / hadwares adquiridos</h1>
-   
-        <tr>
-            <th scope="col">Empresa</th>
-            <th scope="col">Hadwares Adquiridos</th>
-         
-        </tr>
-    </thead>
-    <tbody id="caja">
-       
-    </tbody>
+
+    <tr>
+      <th scope="col">Empresa</th>
+      <th scope="col">Hadwares Adquiridos</th>
+
+    </tr>
+  </thead>
+  <tbody id="caja">
+
+  </tbody>
 </table>
 <script>
-    $(document).ready(function() {
-     
-        datos = [];
+  $(document).ready(function() {
 
-        $.ajax({
-            url: './Library/Motor.php',
-            data: {
-                "corps_options": "s"
-            },
-            type: "GET",
-            dataType: 'json',
-            success: function(data) {
+    datos = [];
 
-                console.log(data);
-                
-                for (x = 0; x < data.length; x++) {
-                    $("#caja").append("<tr><td>" + data[x].nombre + "</td>"+
-                    "<td>"+data[x].hadwares+"</td>"
-                    +"</tr>");
-                    console.log(data[x]);
-                }
-                //console.log(data[0]);
-                datos.push(data);
-            }
-        })
-        $("#btnmodal").click(function(){
-       
-            $.ajax({
-            url: './Library/Motor.php',
-            data: {
-                "prodcuto": "s"
-            },
-            type: "GET",
-            dataType: 'json',
-            success: function(data) {
-            
-                console.log(data);
-                for (x = 0; x < data.length; x++) {
-                    $("#caja23").append("<select>"
-                    +"<option>" 
-                    + data[x].nombre
-                    +"</option>"+
-                    + "</select>"
-                  
-               );
-                    console.log(data[x]);
-                }
-            }
-        })
-        });
+    $.ajax({
+      url: './Library/Motor.php',
+      data: {
+        "corps_options": "s"
+      },
+      type: "GET",
+      dataType: 'json',
+      success: function(data) {
+
+        console.log(data);
+
+        for (x = 0; x < data.length; x++) {
+          $("#caja").append("<tr><td>" + data[x].nombre + "</td>" +
+            "<td>" + data[x].hadwares + "</td>" +
+            "</tr>");
+          console.log(data[x]);
+        }
+        //console.log(data[0]);
+        datos.push(data);
+      }
+    })
+    $("#btnmodal").click(function() {
+
+      $.ajax({
+        url: './Library/Motor.php',
+        data: {
+          "prodcuto": "s"
+        },
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+
+          console.log(data);
+          for (x = 0; x < data.length; x++) {
+            $("#caja23").append("<option value='" + data[x].codigo + "'>" +
+              data[x].nombre +
+              "</option>"
+
+            );
+            $("#sd").attr("value", data[x].idcorp);
+            console.log(data[x]);
+          }
+        }
+      })
+      $.ajax({
+        url: './Library/Motor.php',
+        data: {
+          "empresas": "s"
+        },
+        type: "GET",
+        dataType: 'json',
+        success: function(datae) {
+
+          console.log(datae);
+          for (x = 0; x < datae.length; x++) {
+            $("#caja233").append("<option value='" + datae[x].codigo + "'>" +
+              datae[x].Nombre +
+              "</option>"
+
+            );
+            $("#sd").attr("value", datae[x].idcorp);
+            console.log(datae[x]);
+          }
+        }
+      })
     });
+  });
 </script>
 
 <?php
