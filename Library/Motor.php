@@ -27,3 +27,11 @@ if (isset($_GET['corps_optionsmodal'])) {
   $r = new corp_option();
   echo $r->modalhadware_de_empresa();
 }
+if (isset($_POST['eliminarhadwaredeempresa'])) {
+  $r = new corp_option();
+  echo $r->eliminarhadwaresde_empresas($_POST['idcorp'],$_POST['idoption']);
+}
+if (isset($_GET['llenarhadwaredeempresa'])) {
+  $r = new corp_option();
+  echo $r->llenarhadwaresde_empresas($_GET['idempresa']);
+} 

@@ -18,6 +18,26 @@ class corp_option
             echo "No existe una propiedad llamda {$prop}";
         }
     }
+    function eliminarhadwaresde_empresas($idcorp,$idoption){
+        $queryvalidation = "delete from corps_options where idcorp = '".$idcorp."' and idoptions = '".$idoption."' ";
+        $rsqueryvalidation = mysqli_query(Conexion::obj(), $queryvalidation);
+        echo "Eliminado correctamente";
+    }
+    function llenarhadwaresde_empresas($idcorp){
+        $datos = array();
+        $queryvalidation = "Select b.nombre  as nombre, b.id as idoption  from corps_options a  inner join options b on a.idoptions = b.id  where idcorp = '".$idcorp."' ";
+        $rsqueryvalidation = mysqli_query(Conexion::obj(), $queryvalidation);
+
+        while ($fila = mysqli_fetch_array($rsqueryvalidation)) {
+            $datos[] = array(
+                'nombre' => $fila['nombre'],
+                'codigo'=>$fila['idoption']
+            );
+         
+    }
+        $json = json_encode($datos);
+        echo $json;
+    }
     function relacionarempresaconhadware($idcorp,$idoption)
     {
         $queryvalidation = "Select * from corps_options where idcorp = '".$idcorp."' and idoptions = '".$idoption."' ";

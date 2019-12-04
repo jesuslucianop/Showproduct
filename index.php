@@ -38,7 +38,7 @@ include "./Library/Header.php";
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" id="btnsave">Save changes</button>
+        <button type="button" class="btn btn-primary" id="btnsave">Guardar</button>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@ include "./Library/Header.php";
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"> Eliminar hadware de empresa </h5>
-        <button type="button" id="btnclose">
+        <button type="button" id="btnclose2">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -65,14 +65,14 @@ include "./Library/Header.php";
         </div>
         <div class="md-form mb-5">
           <i class="fas fa-user prefix grey-text"></i>
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Selecciona hadware</label>
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Selecciona hadware a eliminar </label>
           <select id="selecthadwareeditar" class="form-control"></select>
 
         </div>
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" id="btnsave">Save changes</button>
+        <button type="button" class="btn btn-primary" id="btneliminar">Eliminar</button>
       </div>
     </div>
   </div>
@@ -105,19 +105,20 @@ include "./Library/Header.php";
       dataType: 'json',
       success: function(data) {
 
-        //console.log(data);
+   
 
         for (x = 0; x < data.length; x++) {
           $("#caja").append("<tr><td>" + data[x].nombre + "</td>" +
             "<td>" + data[x].hadwares + "</td>" +
 
             "</tr>");
-          //  console.log(data[x]);
+       
         }
-        //console.log(data[0]);
+     
         datos.push(data);
       }
     })
+    //donde se abre el modal eliminar 
     $("#btnmodaleliminar").click(function() {
 
       $.ajax({
@@ -130,7 +131,7 @@ include "./Library/Header.php";
         success: function(data) {
 
 
-          console.log(data);
+  
 
           for (x = 0; x < data.length; x++) {
             $("#selectempresaeditar").append("<option value='" + data[x].codigo + "'>" +
@@ -138,19 +139,69 @@ include "./Library/Header.php";
               "</option>"
 
             );
-            $("#selecthadwareeditar").append("<option value='" + data[x].codigo + "'>" +
-              data[x].nombreoption +
+          }
+      
+        }
+      })
+      //Donde se llena el select de las empresas disponibles en el modal de editar desde el backend 
+      $("#selectempresaeditar").change(function(){
+         var valor = $('select[id=selectempresaeditar]').val();
+         alert(valor); 
+  
+
+         $.ajax({
+        url: './Library/Motor.php',
+        data: {
+          "llenarhadwaredeempresa": "s",
+          "idempresa":+valor
+        },
+        type: "GET",
+        dataType: 'json',
+        success: function(datas) {
+            console.log("de donde esperabas ");
+console.log(datas);
+     
+          
+          for (x = 0; x < datas.length; x++) {
+            $("#selecthadwareeditar").append("<option value='" + datas[x].codigo + "'>" +
+            datas[x].nombre +
               "</option>"
 
             );
 
-            // console.log(data[x]);
+           
           }
         }
       })
-    })
-    $("#btnmodal").click(function() {
 
+    });
+    //boton que abre el modal de eliminar los hadware asociados a una empresa corporativa
+    $('#btneliminar').click(function(){
+       
+        var valor = $('select[id=selectempresaeditar]').val();
+         alert(valor); 
+         var valor2 = $('select[id=selecthadwareeditar]').val();
+         alert(valor2); 
+         $.ajax({
+          url: './Library/Motor.php',
+          data: {
+            "eliminarhadwaredeempresa": "s",
+            "idcorp": +valor,
+            "idoption": +valor2
+          },
+          type: "POST",
+          dataType: 'json',
+          success: function(e) {
+            location.reload();
+          }
+
+        });
+        location.reload();
+    })
+    })
+    //boton de abrir el modal para insertar la nueva empresa 
+    $("#btnmodal").click(function() {
+        //ajax que llena el select de los hadwares
       $.ajax({
         url: './Library/Motor.php',
         data: {
@@ -172,6 +223,7 @@ include "./Library/Header.php";
           }
         }
       })
+         //ajax que llena el select de los empresas
       $.ajax({
         url: './Library/Motor.php',
         data: {
@@ -181,7 +233,7 @@ include "./Library/Header.php";
         dataType: 'json',
         success: function(datae) {
 
-          // console.log(datae);
+         
           for (x = 0; x < datae.length; x++) {
             $("#selectempresa").append("<option value='" + datae[x].codigo + "'>" +
               datae[x].Nombre +
@@ -194,8 +246,9 @@ include "./Library/Header.php";
         }
       });
       $("btnclose").click(function() {
-        alert("klk ");
+        
       });
+      // boton que guarda las empresas nuevas
       $("#btnsave").click(function() {
 
 
@@ -218,20 +271,28 @@ include "./Library/Header.php";
             }
 
             console.log(e);
-            location.reload();
+          
           }
 
         });
-
+        location.reload();
       });
       $("#btnclose").click(function() {
         location.reload();
       });
-
+      $("#btnclose2").click(function() {
+        location.reload();
+      });
+      
       $('#btnmodal').modal({
         backdrop: 'static',
         keyboard: false
-      })
+      });
+      $('#btnmodaleliminar').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+      
     });
 
   });
