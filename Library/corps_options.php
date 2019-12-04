@@ -35,6 +35,28 @@ class corp_option
         $rs = mysqli_query(Conexion::obj(), $query);
         }
     }
+    function modalhadware_de_empresa()
+    {
+        $datos = array();
+        $query  = "SELECT c.Id as codigo,b.id as codigooption,c.nombre 
+        as nombreempresa,GROUP_CONCAT(b.nombre) as nombreoption 
+FROM corps_options a
+inner JOIN options b 
+INNER join corps c 
+where a.idcorp = c.Id and a.idoptions = b.id  GROUP by a.idcorp ";
+        $rs = mysqli_query(Conexion::obj(), $query);
+        while ($fila = mysqli_fetch_array($rs)) {
+            $datos[] = array(
+                'nombreempresa' => $fila['nombreempresa'],
+                'nombreoption' => $fila['nombreoption'],
+                'codigooption' => $fila['codigooption'],
+                'codigo' => $fila['codigo']
+            );
+         
+    }
+        $json = json_encode($datos);
+        echo $json;
+}
     function Listado()
     {
         $datos = array();

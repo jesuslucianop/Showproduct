@@ -23,3 +23,7 @@ if(isset($_GET['corps_options'])){
   $r = new corp_option();
   echo $r->Listado();
 }
+if (isset($_GET['corps_optionsmodal'])) {
+  $r = new corp_option();
+  echo $r->modalhadware_de_empresa();
+}
