@@ -115,7 +115,7 @@ include "./Library/Header.php";
        
         }
      
-        datos.push(data);
+    
       }
     })
     //donde se abre el modal eliminar 
@@ -146,7 +146,7 @@ include "./Library/Header.php";
       //Donde se llena el select de las empresas disponibles en el modal de editar desde el backend 
       $("#selectempresaeditar").change(function(){
          var valor = $('select[id=selectempresaeditar]').val();
-         alert(valor); 
+  
   
 
          $.ajax({
@@ -179,9 +179,9 @@ console.log(datas);
     $('#btneliminar').click(function(){
        
         var valor = $('select[id=selectempresaeditar]').val();
-         alert(valor); 
+
          var valor2 = $('select[id=selecthadwareeditar]').val();
-         alert(valor2); 
+     
          $.ajax({
           url: './Library/Motor.php',
           data: {
@@ -270,7 +270,7 @@ console.log(datas);
               location.reload();
             }
 
-            console.log(e);
+      
           
           }
 
