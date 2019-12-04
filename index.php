@@ -267,15 +267,15 @@ console.log(datas);
           success: function(e) {
             if (e == "false") {
               alert("Esta empresa ya tiene agregado el hadware agregar, intente con otro.");
-              location.reload();
+             
             }
-
+ location.reload();
       
           
           }
 
         });
-        location.reload();
+     
       });
       $("#btnclose").click(function() {
         location.reload();
